@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+service Mapper {
+    rpc MapTask (MapRequest) returns (MapResponse);
+    rpc ServeData (ReadRequest) returns (ReadResponse);
+}
+
+service Reducer {
+    rpc ReduceTask (ReduceRequest) returns (ReduceResponse) {}
+}
+
+message MapRequest {
+    string centroid_list = 1;
+    string data_chunks_index = 2;
+    int32 R = 3;
+}
+
+message MapResponse {
+    bool success = 1;
+}
+
+message ReduceRequest {
+    repeated string mapper_port = 1;
+    int32 partition = 2;
+}
+
+message ReduceResponse {
+    bool success = 1;
+    string output_files = 2;
+}
+
+message ReadRequest {
+    int32 partition_number = 1;
+}
+
+message ReadResponse {
+    repeated string data = 1;
+}

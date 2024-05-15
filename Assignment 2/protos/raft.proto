@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+service RaftNodeService {
+    rpc RequestVote(RequestVoteRequest) returns (RequestVoteResponse);
+    rpc AppendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
+    rpc SET(SetRequest) returns (SetResponse);
+    rpc GET(GetRequest) returns (GetResponse);
+}
+
+message RequestVoteRequest {
+    int32 term = 1;
+    int32 candidate_id = 2;
+    int32 last_log_index = 3;
+    int32 last_log_term = 4;
+}
+
+message RequestVoteResponse {
+    int32 term = 1;
+    bool vote_granted = 2;
+    float old_leader_lease_remaining = 3;
+}
+
+message AppendEntriesRequest {
+    int32 term = 1;
+    int32 leader_id = 2;
+    int32 prev_log_index = 3;
+    int32 prev_log_term = 4;
+    repeated string entries = 5;
+    int32 leader_commit = 6;
+    int32 lease_interval = 7;
+    string remaining_leader_lease = 8;
+    bool flag = 9;
+}
+
+message AppendEntriesResponse {
+    int32 term = 1;
+    bool success = 2;
+}
+
+message SetRequest {
+    string key = 1;
+    string value = 2;
+}
+
+message SetResponse {
+    string responseMessage = 1;
+}
+
+message GetRequest {
+    string key = 1;
+}
+
+message GetResponse {
+    string value = 1;
+    string error = 2;
+}

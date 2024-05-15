@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+
+message NotifyClientRequest {
+    int32 id = 1;
+    string productName = 2;
+    string category = 3;
+    int32 quantity = 4;
+    string description = 5;
+    string sellerAddress = 6;
+    double pricePerUnit = 7;
+    optional double rating = 8;
+}
+
+message NotifyClientResponse {
+    enum Status {
+        SUCCESS = 0;
+        FAILED = 1;
+      }
+    Status status = 1;
+}
+
+
+service NotificationService {
+    rpc NotifyClient(NotifyClientRequest) returns (NotifyClientResponse);
+}
